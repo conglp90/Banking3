@@ -7,6 +7,6 @@ public class TestAccount{
     @Test
     public void newAccountHasZeroBalanceAndIsPersistent() {
         BankAccountDTO accountDTO= BankAccount.openAccount("1234567890");
-        assertEquals(accountDTO.getBalance, 0.0, 0.01);
+        assertEquals(accountDTO.getBalance(), 0.0, 0.01);
     }
 }

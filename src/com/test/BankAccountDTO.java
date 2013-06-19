@@ -16,6 +16,11 @@ public class BankAccountDTO {
 		return balance;
 	}
 
+	public String getAccountNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

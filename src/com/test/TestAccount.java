@@ -23,7 +23,10 @@ public class TestAccount{
     @Test
     public void OpenAccountMustSaveToDB() {
     	ArgumentCaptor<BankAccountDTO> accountDTOCaptor = ArgumentCaptor.forClass(BankAccountDTO.class);
-    	BankAccountDTO accountDTO= BankAccount.openAccount("1234567890");
+    	BankAccount.openAccount("1234567890");
     	verify(mockAccountDao,times(1)).save(accountDTOCaptor.capture());
+    	assertEquals(accountDTOCaptor.getValue().getBalance(), 0.0, 0.01);
+    	assertEquals(accountDTOCaptor.getValue().getAccountNumber(),"1234567890");
+
     }
 }

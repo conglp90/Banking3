@@ -11,5 +11,10 @@ public class BankAccount {
 	public static void setBankAccountDao(BankAccountDao mockAccountDao) {
 		bankAccountDao = mockAccountDao;
 	}
+
+	public static BankAccountDTO getAccount(String accountNumber) {
+		BankAccountDTO result= bankAccountDao.getAccountbyAccountNumber(accountNumber);
+		return result;
+	}
 	
 }

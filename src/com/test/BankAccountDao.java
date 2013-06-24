@@ -6,4 +6,9 @@ public class BankAccountDao {
 		// TODO Auto-generated method stub
 	}
 
+	public BankAccountDTO getAccountbyAccountNumber(String accountNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

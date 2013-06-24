@@ -1,9 +1,6 @@
 package com.test;
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -21,7 +18,7 @@ public class TestAccount{
         assertEquals(accountDTO.getBalance(), 0.0, 0.01);
     }
     @Test
-    public void OpenAccountMustSaveToDB() {
+    public void OpenAccountMustSaveNewAccountToDB() {
     	ArgumentCaptor<BankAccountDTO> accountDTOCaptor = ArgumentCaptor.forClass(BankAccountDTO.class);
     	BankAccount.openAccount("1234567890");
     	verify(mockAccountDao,times(1)).save(accountDTOCaptor.capture());
@@ -29,4 +26,14 @@ public class TestAccount{
     	assertEquals(accountDTOCaptor.getValue().getAccountNumber(),"1234567890");
 
     }
+	@Test
+	public void testCanGetAccountByAccountNumber() {
+		BankAccountDTO accountDTOPush = BankAccount.openAccount("0123456789");
+		when(mockAccountDao.getAccountbyAccountNumber("0123456789")).thenReturn(accountDTOPush);
+		
+		BankAccountDTO accountPop = BankAccount.getAccount("0123456789");
+		
+		verify(mockAccountDao, times(1)).getAccountbyAccountNumber("0123456789");
+		assertEquals(accountPop, accountDTOPush);
+	}
 }

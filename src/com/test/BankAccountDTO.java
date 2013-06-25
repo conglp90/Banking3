@@ -21,6 +21,8 @@ public class BankAccountDTO {
 		return accountNumber;
 	}
 
-	
-
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -16,5 +16,10 @@ public class BankAccount {
 		BankAccountDTO result= bankAccountDao.getAccountbyAccountNumber(accountNumber);
 		return result;
 	}
+
+	public static void deposit(String string, float f, String string2) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

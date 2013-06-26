@@ -43,13 +43,14 @@ public class TestAccount{
 	
 	@Test
 	public void testAfterDepositBalanceHasIncrease() {
-		BankAccountDTO bankAccount = BankAccount.openAccount("0123456789");
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		BankAccountDTO accountDTO= BankAccount.openAccount("0123456789");
+		when(mockAccountDao.getAccountbyAccountNumber("0123456789")).thenReturn(accountDTO);
 		
-		BankAccount.deposit("0123456789", 200f, "Nhieu tien ko tieu het thi gui thoi");
+		BankAccount.deposit("0123456789", 200.0, "Nhieu tien ko tieu het thi gui thoi");
 		
 		verify(mockAccountDao, times(2)).save(argument.capture());
-		assertEquals(200f, argument.getValue().getBalance(), 0.01);
+		assertEquals(200.0, argument.getValue().getBalance(), 0.01);
 		assertEquals("0123456789", argument.getValue().getAccountNumber());
 		assertEquals("Nhieu tien ko tieu het thi gui thoi", argument.getValue().getDescription());
 	}

@@ -4,7 +4,8 @@ public class BankAccountDTO {
 
 	private String accountNumber;
 	private Double balance;
-
+	private String description;
+	
 	public BankAccountDTO(String accountNumber, Double balance) {
 		// TODO Auto-generated constructor stub
 		this.accountNumber=accountNumber;
@@ -22,7 +23,18 @@ public class BankAccountDTO {
 	}
 
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return description;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

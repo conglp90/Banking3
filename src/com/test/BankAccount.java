@@ -17,9 +17,11 @@ public class BankAccount {
 		return result;
 	}
 
-	public static void deposit(String string, float f, String string2) {
-		// TODO Auto-generated method stub
-		
+	public static void deposit(String accountNumber, double amount, String description) {
+		BankAccountDTO accountDTO=getAccount(accountNumber);
+		accountDTO.setBalance(amount);
+		accountDTO.setDescription(description);
+		bankAccountDao.save(accountDTO);
 	}
 	
 }

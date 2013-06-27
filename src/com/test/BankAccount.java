@@ -18,7 +18,7 @@ public class BankAccount {
 	}
 
 	public static void deposit(String accountNumber, double amount, String description) {
-		
+		bankAccountDao.saveTransaction(accountNumber, amount, description,calendar.getTimeInMillis());
 		BankAccountDTO accountDTO=getAccount(accountNumber);
 		accountDTO.setBalance(amount);
 		accountDTO.setDescription(description);

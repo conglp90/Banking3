@@ -11,4 +11,7 @@ public class BankAccountDao {
 		return null;
 	}
 
+	public TransactionDTO saveTransaction(String accountNumber, Double amount, String description, Long timestamp){
+		return null;
+	}
 }

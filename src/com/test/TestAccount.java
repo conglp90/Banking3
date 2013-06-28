@@ -102,5 +102,26 @@ public class TestAccount{
 		assertEquals("Nhieu tien ko tieu het thi gui thoi", argument.getValue().getDescription());
 	}
 
-	
+	@Test
+	public void testAfterWithDrawTransactionShouldBeSaveToDB() {
+		ArgumentCaptor<String> numberAccountCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<Double> amountCaptor = ArgumentCaptor.forClass(Double.class);
+		ArgumentCaptor<String> decriptionCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<Long> timeStampCaptor = ArgumentCaptor.forClass(Long.class);
+		BankAccountDTO bankAccount = BankAccount.openAccount("0123456789");
+		when(mockAccountDao.getAccountbyAccountNumber("0123456789")).thenReturn(bankAccount);
+		Long timeStamp = System.currentTimeMillis();
+		when(mockCalendar.getTimeInMillis()).thenReturn(timeStamp);
+		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		
+		
+		BankAccount.WithDraw("0123456789", 200.0, "Nhieu tien ko tieu het thi gui thoi");
+		
+		
+		verify(mockAccountDao, times(1)). saveTransaction(numberAccountCaptor.capture(), amountCaptor.capture(), decriptionCaptor.capture(), timeStampCaptor.capture());
+		assertEquals("0123456789", numberAccountCaptor.getValue());
+		assertEquals(200.0, amountCaptor.getValue(),0.01);
+		assertEquals("Nhieu tien ko tieu het thi gui thoi",decriptionCaptor.getValue());
+		assertEquals(timeStamp, timeStampCaptor.getValue());
+	}
 }

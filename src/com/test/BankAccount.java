@@ -1,6 +1,7 @@
 package com.test;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class BankAccount {
 	static BankAccountDao bankAccountDao;
@@ -38,9 +39,8 @@ public class BankAccount {
 	}
 
 
-	public static void getListTransaction(String string) {
-		// TODO Auto-generated method stub
-		
+	public static List<TransactionDTO> getListTransaction(String accountNumber) {
+		return bankAccountDao.getListTransaction(accountNumber);
 	}
 	
 }

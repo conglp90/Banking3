@@ -30,7 +30,9 @@ public class TestAccount{
     @Test
     public void OpenAccountMustSaveNewAccountToDB() {
     	ArgumentCaptor<BankAccountDTO> accountDTOCaptor = ArgumentCaptor.forClass(BankAccountDTO.class);
+    	
     	BankAccount.openAccount("1234567890");
+    	
     	verify(mockAccountDao,times(1)).save(accountDTOCaptor.capture());
     	assertEquals(accountDTOCaptor.getValue().getBalance(), 0.0, 0.01);
     	assertEquals(accountDTOCaptor.getValue().getAccountNumber(),"1234567890");
@@ -83,7 +85,21 @@ public class TestAccount{
 		assertEquals(200.0, amountCaptor.getValue(),0.01);
 		assertEquals("Nhieu tien ko tieu het thi gui thoi",decriptionCaptor.getValue());
 		assertEquals(timeStamp, timeStampCaptor.getValue());
-
+	}
+	
+	@Test
+	public void testAfterWithDrawBalanceHasIncrease() {
+		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		BankAccountDTO accountDTO= BankAccount.openAccount("0123456789");
+		accountDTO.setBalance(200.0);
+		when(mockAccountDao.getAccountbyAccountNumber("0123456789")).thenReturn(accountDTO);
+		
+		BankAccount.WithDraw("0123456789", 100.0, "Nhieu tien ko tieu het thi gui thoi");
+		
+		verify(mockAccountDao, times(2)).save(argument.capture());
+		assertEquals(100.0, argument.getValue().getBalance(), 0.01);
+		assertEquals("0123456789", argument.getValue().getAccountNumber());
+		assertEquals("Nhieu tien ko tieu het thi gui thoi", argument.getValue().getDescription());
 	}
 
 	

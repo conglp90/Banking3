@@ -25,13 +25,18 @@ public class BankAccount {
 		bankAccountDao.save(accountDTO);
 	}
 
-
 	public static void setBankAccountDao(BankAccountDao mockAccountDao) {
 		bankAccountDao = mockAccountDao;
 	}
 	
 	public static void setCalendar(Calendar mockCalendar) {
 		calendar=mockCalendar;
+	}
+
+
+	public static void WithDraw(String accountNumber, double amount, String description) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -17,7 +17,7 @@ public class BankAccountDao {
 		return null;
 	}
 
-	public List<TransactionDTO> getListTransaction(String capture) {
+	public List<TransactionDTO> getListTransactionOccurred(String capture) {
 		return null;
 	}
 }

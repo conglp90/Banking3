@@ -123,13 +123,14 @@ public class TestAccount{
 		assertEquals("Nhieu tien ko tieu het thi gui thoi",decriptionCaptor.getValue());
 		assertEquals(timeStamp, timeStampCaptor.getValue());
 	}
+	
 	@Test
-	public void testGetListTransaction() {
+	public void testGetListTransactionOccurred() {
 		ArgumentCaptor<String> accountNumberCaptor = ArgumentCaptor.forClass(String.class);
 		
-		BankAccount.getListTransaction("0123456789");
+		BankAccount.getListTransactionOccurred("0123456789");
 		
-		verify(mockAccountDao, times(1)).getListTransaction(accountNumberCaptor.capture());
+		verify(mockAccountDao, times(1)).getListTransactionOccurred(accountNumberCaptor.capture());
 		assertEquals("0123456789", accountNumberCaptor.getValue());
 	}
 }

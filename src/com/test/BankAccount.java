@@ -39,8 +39,8 @@ public class BankAccount {
 	}
 
 
-	public static List<TransactionDTO> getListTransaction(String accountNumber) {
-		return bankAccountDao.getListTransaction(accountNumber);
+	public static List<TransactionDTO> getListTransactionOccurred(String accountNumber) {
+		return bankAccountDao.getListTransactionOccurred(accountNumber);
 	}
 	
 }

@@ -11,7 +11,6 @@ import org.mockito.ArgumentCaptor;
 public class TestAccount{
 	private BankAccountDao mockAccountDao = mock(BankAccountDao.class);
 	private Calendar mockCalendar = mock(Calendar.class);
-	private TransactionDAO mockTransactionDAO = mock(TransactionDAO.class);
 	
 	@Before
     public void setUp () {
@@ -66,7 +65,7 @@ public class TestAccount{
 	
 	@Test
 	public void testAfterDepositTransactionShouldBeSaveToDB() {
-		ArgumentCaptor<String> numberAccountCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<String> accountNumberCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Double> amountCaptor = ArgumentCaptor.forClass(Double.class);
 		ArgumentCaptor<String> decriptionCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Long> timeStampCaptor = ArgumentCaptor.forClass(Long.class);
@@ -80,8 +79,8 @@ public class TestAccount{
 		BankAccount.deposit("0123456789", 200.0, "Nhieu tien ko tieu het thi gui thoi");
 		
 		
-		verify(mockAccountDao, times(1)). saveTransaction(numberAccountCaptor.capture(), amountCaptor.capture(), decriptionCaptor.capture(), timeStampCaptor.capture());
-		assertEquals("0123456789", numberAccountCaptor.getValue());
+		verify(mockAccountDao, times(1)). saveTransaction(accountNumberCaptor.capture(), amountCaptor.capture(), decriptionCaptor.capture(), timeStampCaptor.capture());
+		assertEquals("0123456789", accountNumberCaptor.getValue());
 		assertEquals(200.0, amountCaptor.getValue(),0.01);
 		assertEquals("Nhieu tien ko tieu het thi gui thoi",decriptionCaptor.getValue());
 		assertEquals(timeStamp, timeStampCaptor.getValue());
@@ -94,7 +93,7 @@ public class TestAccount{
 		accountDTO.setBalance(200.0);
 		when(mockAccountDao.getAccountbyAccountNumber("0123456789")).thenReturn(accountDTO);
 		
-		BankAccount.WithDraw("0123456789", 100.0, "Nhieu tien ko tieu het thi gui thoi");
+		BankAccount.withDraw("0123456789", 100.0, "Nhieu tien ko tieu het thi gui thoi");
 		
 		verify(mockAccountDao, times(2)).save(argument.capture());
 		assertEquals(100.0, argument.getValue().getBalance(), 0.01);
@@ -104,7 +103,7 @@ public class TestAccount{
 
 	@Test
 	public void testAfterWithDrawTransactionShouldBeSaveToDB() {
-		ArgumentCaptor<String> numberAccountCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<String> accountNumberCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Double> amountCaptor = ArgumentCaptor.forClass(Double.class);
 		ArgumentCaptor<String> decriptionCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Long> timeStampCaptor = ArgumentCaptor.forClass(Long.class);
@@ -115,13 +114,22 @@ public class TestAccount{
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
 		
 		
-		BankAccount.WithDraw("0123456789", 200.0, "Nhieu tien ko tieu het thi gui thoi");
+		BankAccount.withDraw("0123456789", 200.0, "Nhieu tien ko tieu het thi gui thoi");
 		
 		
-		verify(mockAccountDao, times(1)). saveTransaction(numberAccountCaptor.capture(), amountCaptor.capture(), decriptionCaptor.capture(), timeStampCaptor.capture());
-		assertEquals("0123456789", numberAccountCaptor.getValue());
+		verify(mockAccountDao, times(1)). saveTransaction(accountNumberCaptor.capture(), amountCaptor.capture(), decriptionCaptor.capture(), timeStampCaptor.capture());
+		assertEquals("0123456789", accountNumberCaptor.getValue());
 		assertEquals(200.0, amountCaptor.getValue(),0.01);
 		assertEquals("Nhieu tien ko tieu het thi gui thoi",decriptionCaptor.getValue());
 		assertEquals(timeStamp, timeStampCaptor.getValue());
+	}
+	@Test
+	public void testGetListTransaction() {
+		ArgumentCaptor<String> accountNumberCaptor = ArgumentCaptor.forClass(String.class);
+		
+		BankAccount.getListTransaction("0123456789");
+		
+		verify(mockAccountDao, times(1)).getListTransaction(accountNumberCaptor.capture());
+		assertEquals("0123456789", accountNumberCaptor.getValue());
 	}
 }

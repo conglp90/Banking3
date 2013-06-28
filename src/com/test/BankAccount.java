@@ -8,7 +8,7 @@ public class BankAccount {
 	static Calendar calendar;
 	public static BankAccountDTO openAccount(String accountNumber) {
 		BankAccountDTO accountDTO= new BankAccountDTO(accountNumber,0.0);
-		bankAccountDao.save(accountDTO);
+		bankAccountDao.save(accountDTO, calendar.getTimeInMillis());
 		return accountDTO;
 	}
 
@@ -23,7 +23,7 @@ public class BankAccount {
 		BankAccountDTO accountDTO=getAccount(accountNumber);
 		accountDTO.setBalance(amount);
 		accountDTO.setDescription(description);
-		bankAccountDao.save(accountDTO);
+		bankAccountDao.save(accountDTO, calendar.getTimeInMillis());
 	}
 
 	public static void setBankAccountDao(BankAccountDao mockAccountDao) {

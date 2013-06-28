@@ -29,12 +29,17 @@ public class TestAccount{
     @Test
     public void OpenAccountMustSaveNewAccountToDB() {
     	ArgumentCaptor<BankAccountDTO> accountDTOCaptor = ArgumentCaptor.forClass(BankAccountDTO.class);
+    	ArgumentCaptor<Long> timeStempCaptor = ArgumentCaptor.forClass(Long.class);
+    	Long nowTime=System.currentTimeMillis();
+    	when(mockCalendar.getTimeInMillis()).thenReturn(nowTime);
     	
     	BankAccount.openAccount("1234567890");
     	
-    	verify(mockAccountDao,times(1)).save(accountDTOCaptor.capture());
+    	verify(mockAccountDao,times(1)).save(accountDTOCaptor.capture(), timeStempCaptor.capture());
+    	assertEquals(timeStempCaptor.getValue(),nowTime);
     	assertEquals(accountDTOCaptor.getValue().getBalance(), 0.0, 0.01);
     	assertEquals(accountDTOCaptor.getValue().getAccountNumber(),"1234567890");
+    	
 
     }
     
@@ -51,16 +56,20 @@ public class TestAccount{
 	
 	@Test
 	public void testAfterDepositBalanceHasIncrease() {
-		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		ArgumentCaptor<BankAccountDTO> accountDTOCaptor = ArgumentCaptor.forClass(BankAccountDTO.class);
 		BankAccountDTO accountDTO= BankAccount.openAccount("0123456789");
 		when(mockAccountDao.getAccountbyAccountNumber("0123456789")).thenReturn(accountDTO);
-		
+		ArgumentCaptor<Long> timeStempCaptor = ArgumentCaptor.forClass(Long.class);
+    	Long nowTime=System.currentTimeMillis();
+    	when(mockCalendar.getTimeInMillis()).thenReturn(nowTime);
+    	
 		BankAccount.deposit("0123456789", 200.0, "Nhieu tien ko tieu het thi gui thoi");
 		
-		verify(mockAccountDao, times(2)).save(argument.capture());
-		assertEquals(200.0, argument.getValue().getBalance(), 0.01);
-		assertEquals("0123456789", argument.getValue().getAccountNumber());
-		assertEquals("Nhieu tien ko tieu het thi gui thoi", argument.getValue().getDescription());
+		verify(mockAccountDao,times(2)).save(accountDTOCaptor.capture(), timeStempCaptor.capture());
+    	assertEquals(timeStempCaptor.getValue(),nowTime);
+		assertEquals(200.0, accountDTOCaptor.getValue().getBalance(), 0.01);
+		assertEquals("0123456789", accountDTOCaptor.getValue().getAccountNumber());
+		assertEquals("Nhieu tien ko tieu het thi gui thoi", accountDTOCaptor.getValue().getDescription());
 	}
 	
 	@Test
@@ -88,17 +97,21 @@ public class TestAccount{
 	
 	@Test
 	public void testAfterWithDrawBalanceHasIncrease() {
-		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		ArgumentCaptor<BankAccountDTO> accountDTOCaptor = ArgumentCaptor.forClass(BankAccountDTO.class);
 		BankAccountDTO accountDTO= BankAccount.openAccount("0123456789");
 		accountDTO.setBalance(200.0);
 		when(mockAccountDao.getAccountbyAccountNumber("0123456789")).thenReturn(accountDTO);
+		ArgumentCaptor<Long> timeStempCaptor = ArgumentCaptor.forClass(Long.class);
+    	Long nowTime=System.currentTimeMillis();
+    	when(mockCalendar.getTimeInMillis()).thenReturn(nowTime);
 		
 		BankAccount.withDraw("0123456789", 100.0, "Nhieu tien ko tieu het thi gui thoi");
 		
-		verify(mockAccountDao, times(2)).save(argument.capture());
-		assertEquals(100.0, argument.getValue().getBalance(), 0.01);
-		assertEquals("0123456789", argument.getValue().getAccountNumber());
-		assertEquals("Nhieu tien ko tieu het thi gui thoi", argument.getValue().getDescription());
+		verify(mockAccountDao,times(2)).save(accountDTOCaptor.capture(), timeStempCaptor.capture());
+    	assertEquals(timeStempCaptor.getValue(),nowTime);
+		assertEquals(100.0, accountDTOCaptor.getValue().getBalance(), 0.01);
+		assertEquals("0123456789", accountDTOCaptor.getValue().getAccountNumber());
+		assertEquals("Nhieu tien ko tieu het thi gui thoi", accountDTOCaptor.getValue().getDescription());
 	}
 
 	@Test

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BankAccountDao {
 
-	public void save(BankAccountDTO capture) {
+	public void save(BankAccountDTO account, Long timeStamp) {
 		// TODO Auto-generated method stub
 	}
 

@@ -33,10 +33,8 @@ public class BankAccount {
 		calendar=mockCalendar;
 	}
 
-
 	public static void WithDraw(String accountNumber, double amount, String description) {
-		// TODO Auto-generated method stub
-		
+		deposit(accountNumber, amount, description);
 	}
 	
 }

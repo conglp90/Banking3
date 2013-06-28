@@ -42,5 +42,9 @@ public class BankAccount {
 	public static List<TransactionDTO> getListTransactionOccurred(String accountNumber) {
 		return bankAccountDao.getListTransactionOccurred(accountNumber);
 	}
+
+	public static List<TransactionDTO> getListTransactionOccurred(String accountNumber, Long startTime, Long stopTime) {
+		return null;
+	}
 	
 }

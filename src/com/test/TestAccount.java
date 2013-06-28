@@ -133,4 +133,18 @@ public class TestAccount{
 		verify(mockAccountDao, times(1)).getListTransactionOccurred(accountNumberCaptor.capture());
 		assertEquals("0123456789", accountNumberCaptor.getValue());
 	}
+	
+	@Test
+	public void testGetListTransactionOccurredInTime() {
+		ArgumentCaptor<String> accountNumberCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<Long> startTimeCaptor = ArgumentCaptor.forClass(Long.class);
+		ArgumentCaptor<Long> stopTimeCaptor = ArgumentCaptor.forClass(Long.class);
+		Long startTime= System.currentTimeMillis();
+		Long stopTime= startTime+5000000L;
+		
+		BankAccount.getListTransactionOccurred("0123456789", startTime, stopTime);
+		
+		verify(mockAccountDao, times(1)).getListTransactionOccurred(accountNumberCaptor.capture(), startTimeCaptor.capture(), stopTimeCaptor.capture());
+		assertEquals("0123456789", accountNumberCaptor.getValue());
+	}
 }

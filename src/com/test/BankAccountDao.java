@@ -20,4 +20,8 @@ public class BankAccountDao {
 	public List<TransactionDTO> getListTransactionOccurred(String capture) {
 		return null;
 	}
+
+	public List<TransactionDTO> getListTransactionOccurred(String capture, Long capture2, Long capture3) {
+		return null;
+	}
 }
